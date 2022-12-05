@@ -3,7 +3,7 @@ import storeSlice from './slices/storeSlice';
 
 const store = configureStore({
   reducer: {
-    store: storeSlice,
+    storeReducer: storeSlice,
     // If necessary add more reducers..
   }
 })

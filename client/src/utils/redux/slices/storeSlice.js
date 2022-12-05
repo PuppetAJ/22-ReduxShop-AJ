@@ -15,22 +15,21 @@ export const storeSlice = createSlice({
       UPDATE_PRODUCTS: (state, action) => {
         return {
           ...state,
-          products: [...action.products],
+          products: [...action.payload],
         };
       },
   
       UPDATE_CATEGORIES: (state, action) => {
         return {
           ...state,
-          categories: [...action.categories]
+          categories: [...action.payload]
         };
       },
 
-  
       UPDATE_CURRENT_CATEGORY: (state, action) => {
         return {
           ...state,
-          currentCategory: action.currentCategory
+          currentCategory: action.payload
         };
       },
 
@@ -38,21 +37,21 @@ export const storeSlice = createSlice({
         return {
           ...state,
           cartOpen: true,
-          cart: [...state.cart, action.product]
+          cart: [...state.cart, action.payload]
         };
       },
 
       ADD_MULTIPLE_TO_CART: (state, action) => {
         return {
           ...state,
-          cart: [...state.cart, ...action.products],
+          cart: [...state.cart, ...action.payload.products],
         };
 
       },
 
       REMOVE_FROM_CART: (state, action) => {
-        let newState = state.cart.filter(product => {
-          return product._id !== action._id;
+        let newState = state.cart.filter(cartItem => {
+          return cartItem._id !== action.payload._id;
         });
   
         return {
@@ -63,16 +62,13 @@ export const storeSlice = createSlice({
       }, 
       
       UPDATE_CART_QUANTITY: (state, action) => {
-        return {
-          ...state,
-          cartOpen: true,
-          cart: state.cart.map(product => {
-            if(action._id === product._id) {
-              product.purchaseQuantity = action.purchaseQuantity;
-            }
-            return product;
-          })
-        }
+        state.cart = state.cart.map(cartItem => {
+          if(action.payload._id === cartItem._id) {
+            cartItem.purchaseQuantity = action.payload.purchaseQuantity;
+          }
+          return cartItem;
+        })
+        state.cartOpen = true;
       },
   
       CLEAR_CART: (state) => {

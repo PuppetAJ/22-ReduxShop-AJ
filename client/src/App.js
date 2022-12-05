@@ -17,8 +17,6 @@ import Nav from './components/Nav';
 import OrderHistory from './pages/OrderHistory';
 import Success from './pages/Success';
 
-import { StoreProvider } from './utils/GlobalState';
-
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -43,39 +41,37 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <StoreProvider>
-            <Nav />
-            <Routes>
-              <Route 
-                path="/" 
-                element={<Home />} 
-              />
-              <Route 
-                path="/login" 
-                element={<Login />}
-              />
-              <Route 
-                path="/signup" 
-                element={<Signup />} 
-              />
-              <Route 
-                path="/orderHistory" 
-                element={<OrderHistory />} 
-              />
-              <Route 
-                path="/products/:id" 
-                element={<Detail />}
-              />
-              <Route
-                path="/success"
-                element={<Success />}
-              />
-              <Route 
-                path="*" 
-                element={<NoMatch />}
-              />
-            </Routes>
-          </StoreProvider>
+          <Nav />
+          <Routes>
+            <Route 
+              path="/" 
+              element={<Home />} 
+            />
+            <Route 
+              path="/login" 
+              element={<Login />}
+            />
+            <Route 
+              path="/signup" 
+              element={<Signup />} 
+            />
+            <Route 
+              path="/orderHistory" 
+              element={<OrderHistory />} 
+            />
+            <Route 
+              path="/products/:id" 
+              element={<Detail />}
+            />
+            <Route
+              path="/success"
+              element={<Success />}
+            />
+            <Route 
+              path="*" 
+              element={<NoMatch />}
+            />
+          </Routes>
         </div>
       </Router>
     </ApolloProvider>
