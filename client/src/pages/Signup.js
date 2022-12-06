@@ -1,3 +1,4 @@
+// Import
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -8,8 +9,10 @@ function Signup(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [addUser] = useMutation(ADD_USER);
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    // Use form state to add user
     const mutationResponse = await addUser({
       variables: {
         email: formState.email,
@@ -18,11 +21,15 @@ function Signup(props) {
         lastName: formState.lastName,
       },
     });
+    // Get token from add user
     const token = mutationResponse.data.addUser.token;
+    // Login user
     Auth.login(token);
   };
 
+  // Handle change func
   const handleChange = (event) => {
+    // Update form state on change
     const { name, value } = event.target;
     setFormState({
       ...formState,
@@ -30,6 +37,7 @@ function Signup(props) {
     });
   };
 
+  // JSX
   return (
     <div className="container my-1">
       <Link to="/login">← Go to Login</Link>
@@ -84,4 +92,5 @@ function Signup(props) {
   );
 }
 
+// Export Component
 export default Signup;

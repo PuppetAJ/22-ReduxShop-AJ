@@ -1,3 +1,4 @@
+// Pluralizes word
 export function pluralize(name, count) {
   if (count === 1) {
     return name
@@ -5,13 +6,17 @@ export function pluralize(name, count) {
   return name + 's'
 }
 
+// IDB promise func
 export function idbPromise(storeName, method, object) {
   return new Promise((resolve, reject) => {
 
+    // Open db connection
     const request = window.indexedDB.open('shop-shop', 1);
 
+    // Initialize vars
     let db, tx, store;
 
+    // If database needs an updateo or doesn't exist then create new DB
     request.onupgradeneeded = function(e) {
       const db = request.result;
 
@@ -20,10 +25,12 @@ export function idbPromise(storeName, method, object) {
       db.createObjectStore('cart', { keyPath: '_id' });
     };
 
+    // If error log error
     request.onerror = function(e) {
       console.log('There was an error', e);
     };
 
+    // On db request success, then store transaction and objectstore data
     request.onsuccess = function(e) {
       db = request.result;
 
@@ -34,6 +41,8 @@ export function idbPromise(storeName, method, object) {
         console.log('error', e);
       };
 
+      // Methods to interact with DB
+      // Resolves promise after updating DB
       switch (method) {
         case 'put':
           store.put(object);
@@ -53,6 +62,7 @@ export function idbPromise(storeName, method, object) {
           break;
       }
 
+      // On completion of transaction close db connection
       tx.oncomplete = function() {
         db.close();
       };

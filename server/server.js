@@ -8,6 +8,8 @@ const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+// Instantiate apollo server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -28,10 +30,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+// Start server
 const startApolloServer = async () => {
+  // Once server has started.. THEN apply middleware
   await server.start();
   server.applyMiddleware({ app });
 
+  // Once db is open then make app listen and log links 
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);

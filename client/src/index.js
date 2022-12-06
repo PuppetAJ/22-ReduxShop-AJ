@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import store from './utils/redux/store';
 import { Provider } from 'react-redux';
 
+// JSX
+// Adds provider using global store so it can be accessed by all components in <App/>
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

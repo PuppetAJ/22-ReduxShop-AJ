@@ -1,6 +1,8 @@
+// Imports
 import React from "react";
 import Jumbotron from "../components/Jumbotron";
 
+// JSX
 const NoMatch = () => {
   return (
     <div>
@@ -16,4 +18,5 @@ const NoMatch = () => {
   );
 };
 
+// Export components
 export default NoMatch;

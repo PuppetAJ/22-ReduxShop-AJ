@@ -17,10 +17,12 @@ import Nav from './components/Nav';
 import OrderHistory from './pages/OrderHistory';
 import Success from './pages/Success';
 
+// Set up gql http link
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
 
+// Set up authorization link using JWT 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
   return {
@@ -31,11 +33,13 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Initialize apollo client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
+// JSX
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -78,4 +82,5 @@ function App() {
   );
 }
 
+// Export app
 export default App;

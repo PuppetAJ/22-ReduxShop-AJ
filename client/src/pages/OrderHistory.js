@@ -1,3 +1,4 @@
+// Imports
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,10 +9,13 @@ function OrderHistory() {
   const { data } = useQuery(QUERY_USER);
   let user;
 
+  // If there's data, then extract the user data
+  // Could be refactored into a different query(?)
   if (data) {
     user = data.user;
   }
 
+  // JSX
   return (
     <>
       <div className="container my-1">
@@ -49,4 +53,5 @@ function OrderHistory() {
   );
 }
 
+// Export component
 export default OrderHistory;

@@ -1,6 +1,8 @@
+// Imports
 import { configureStore } from '@reduxjs/toolkit';
 import storeSlice from './slices/storeSlice';
 
+// Global store initialized with reducers
 const store = configureStore({
   reducer: {
     storeReducer: storeSlice,
@@ -8,5 +10,6 @@ const store = configureStore({
   }
 })
 
+// Export store
 export default store;
 

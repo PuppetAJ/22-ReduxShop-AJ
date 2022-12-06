@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server-express');
 
+// Type definition declarations
 const typeDefs = gql`
   type Checkout {
     session: ID
@@ -57,4 +58,5 @@ const typeDefs = gql`
   }
 `;
 
+// Export type definitions
 module.exports = typeDefs;

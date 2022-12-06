@@ -1,5 +1,7 @@
+// Imports
 import { createSlice } from '@reduxjs/toolkit';
 
+// Initial user's state to track
 const initialState = {
   products: [],
   cart: [],
@@ -8,6 +10,8 @@ const initialState = {
   currentCategory: ''
 }
 
+// Slice instantiation
+// reducers, actions, name, and initial state passed into slice
 export const storeSlice = createSlice({
   name: 'StoreState',
   initialState,
@@ -89,6 +93,7 @@ export const storeSlice = createSlice({
   }
 });
 
+// Export actions
 export const { 
   UPDATE_PRODUCTS, 
   UPDATE_CATEGORIES, 
@@ -101,4 +106,5 @@ export const {
   TOGGLE_CART
  } = storeSlice.actions;
 
- export default storeSlice.reducer;
+// Export reducer
+export default storeSlice.reducer;

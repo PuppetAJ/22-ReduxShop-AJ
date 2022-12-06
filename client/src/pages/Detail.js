@@ -1,10 +1,9 @@
+// Imports
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-// import { useStoreContext } from "../utils/GlobalState";
-// import { UPDATE_PRODUCTS, ADD_TO_CART, UPDATE_CART_QUANTITY, REMOVE_FROM_CART } from "../utils/actions";
-
+// Redux imports
 import { UPDATE_PRODUCTS, ADD_TO_CART, UPDATE_CART_QUANTITY, REMOVE_FROM_CART } from '../utils/redux/slices/storeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -22,17 +21,23 @@ function Detail() {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   const { products, cart } = state;
+
+  // Effect to run on load
   useEffect(() => {
     if (products.length) {
+      // Sets the current product to the product of the page we're on
       setCurrentProduct(products.find(product => product._id === id));
     } else if (data) {
+      // If there's no data, dispatch data.products to global state
       dispatch(UPDATE_PRODUCTS(data.products));
 
+      // Add data to IDB
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
       });
     }
 
+    // If the data is not loading then send an IDB promise to get data
     else if (!loading) {
       idbPromise('products', 'get').then((indexedProducts) => {
         dispatch(UPDATE_PRODUCTS(indexedProducts));
@@ -40,6 +45,7 @@ function Detail() {
     }
   }, [products, data, loading, dispatch, id]);
 
+  // Add to cart logic (sends dispatches and caches data to IDB)
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === id);
     if (itemInCart) {
@@ -63,6 +69,7 @@ function Detail() {
     }
   };
 
+  // Remove from cart logic (sends dispatches and saves to IDB)
   const removeFromCart = () => {
     dispatch(REMOVE_FROM_CART(
       {
@@ -72,6 +79,7 @@ function Detail() {
     idbPromise('cart','delete',{...currentProduct});
   };
 
+  // JSX
   return (
     <>
       {currentProduct ? (
@@ -107,4 +115,5 @@ function Detail() {
   );
 }
 
+// Export
 export default Detail;

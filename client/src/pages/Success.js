@@ -1,3 +1,4 @@
+// Imports
 import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import Jumbotron from "../components/Jumbotron";
@@ -5,13 +6,19 @@ import { ADD_ORDER } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers';
 
 function Success() {
+  // Note: Page potentially needs a refactor to account for people navigating directly to this url
+  // Would maybe(?) set the order history to the user's cart despite never checking out
+
   const [addOrder] = useMutation(ADD_ORDER);
 
+  // Effect on load
   useEffect(() => {
     async function saveOrder() {
+      // Get cart data
       const cart = await idbPromise('cart', 'get');
       const products = cart.map(el => {return el._id});
 
+      // If there is cart data then save the order to IDB
       if (products.length) {
         const { data } = await addOrder({ variables: { products }});
         const productData = data.addOrder.products;
@@ -21,6 +28,7 @@ function Success() {
         })
       }
 
+      // After 3 seconds then redirect
       setTimeout(() => {
         window.location.assign('/');
       }, 3000);
@@ -29,6 +37,7 @@ function Success() {
     saveOrder();
   }, [addOrder]);
 
+  // JSX
   return (
     <div>
       <Jumbotron>
@@ -44,4 +53,5 @@ function Success() {
   );
 };
 
+// Export page
 export default Success;
